@@ -37,6 +37,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
 import com.soloway.city.milesharing.R;
+import com.soloway.city.milesharing.dialogs.RegisterDialogFragment;
+import com.soloway.city.milesharing.routing.GMapV2GetRouteDirection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -357,7 +359,8 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
 	public void showRegisterDialog() {
         // Create an instance of the dialog fragment and show it
         RegisterDialogFragment dialog = new RegisterDialogFragment();
-        dialog.show(getFragmentManager(), "RegisterDialogFragment");
+//        dialog.show(getFragmentManager(), "RegisterDialogFragment");
+        dialog.show(getSupportFragmentManager(), "RegisterDialogFragment");
     }
 	
 	public void onDialogPositiveClick(RegisterDialogFragment dialog) {
@@ -401,6 +404,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
 
                 }
             }).start();
+			
 //			// Create a new HttpClient and Post Header
 //			HttpClient httpclient = new DefaultHttpClient();
 //			HttpPost httppost = new HttpPost("http://78.47.251.3/users.php?push_user");

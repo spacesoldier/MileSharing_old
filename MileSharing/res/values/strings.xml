@@ -7,8 +7,6 @@
     <string name="title_activity_splash">MileSharing</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    
-    
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="passconfirm">Confirm pass</string>
@@ -16,7 +14,7 @@
     <string name="lastname">Last name</string>
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
-    
+
     <string-array name="items">
         <item>New travel</item>
         <item>Item 2</item>
@@ -25,8 +23,7 @@
         <item>Item 5</item>
         <item>Prefernces</item>
     </string-array>
-    
-        <string-array name="items_pass">
+    <string-array name="items_pass">
         <item>Find driver</item>
         <item>History</item>
         <item>Routes</item>
@@ -34,8 +31,7 @@
         <item>Competitions</item>
         <item>Prefernces</item>
     </string-array>
-    
-            <string-array name="items_driver">
+    <string-array name="items_driver">
         <item>Find passanger</item>
         <item>History</item>
         <item>Routes</item>
@@ -43,9 +39,15 @@
         <item>Popular</item>
         <item>Prefernces</item>
     </string-array>
-    
-    
+
     <string name="pass_menu">Passanger</string>
     <string name="driver_menu">Driver</string>
-     
+    <string name="title_activity_main_map">MainMapActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+
 </resources>
