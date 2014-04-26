@@ -196,6 +196,8 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
             */
           
         }
+        
+        mainMapActivity = this;
     }
     @Override
     public void onLocationChanged(Location location) {
@@ -267,7 +269,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
     private LinearLayout layout;
     private LinearLayout layout_top;
     
-    private FragmentActivity mainMapActivity;
+    private MapActivity mainMapActivity;
     int dur;
     int dis;
     private OnClickListener buttonClickListener = new OnClickListener() {

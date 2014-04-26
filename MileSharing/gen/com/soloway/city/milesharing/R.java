@@ -1210,11 +1210,10 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050029;
         public static final int action_bar_title=0x7f050028;
         public static final int action_context_bar=0x7f050023;
-        public static final int action_example=0x7f050056;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f05002a;
-        public static final int action_settings=0x7f050055;
+        public static final int action_settings=0x7f050056;
         public static final int activity_chooser_view_content=0x7f05002b;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1222,7 +1221,7 @@ containing a value of this type.
         public static final int btn_cancel=0x7f05001e;
         public static final int btn_ok=0x7f05001d;
         public static final int checkbox=0x7f050033;
-        public static final int choose_item=0x7f050052;
+        public static final int choose_item=0x7f050055;
         public static final int collapseActionView=0x7f05000d;
         public static final int content_frame=0x7f050043;
         public static final int default_activity_button=0x7f05002e;
@@ -1235,27 +1234,28 @@ containing a value of this type.
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f05002c;
         public static final int expanded_menu=0x7f050032;
-        public static final int firstname=0x7f05004e;
+        public static final int firstname=0x7f05004f;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int hybrid=0x7f05001c;
         public static final int icon=0x7f050030;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f05002d;
-        public static final int img=0x7f05004b;
-        public static final int lastname=0x7f05004d;
+        public static final int img=0x7f05004c;
+        public static final int lastname=0x7f05004e;
         public static final int left_drawer=0x7f050048;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f05002f;
         public static final int map=0x7f050045;
+        public static final int menu_drawer=0x7f05004b;
         public static final int middle=0x7f050012;
         public static final int navigation_drawer=0x7f050047;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int pass_item=0x7f050053;
-        public static final int passconfirm=0x7f050051;
-        public static final int password=0x7f050050;
+        public static final int passconfirm=0x7f050052;
+        public static final int password=0x7f050051;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f050035;
@@ -1285,10 +1285,10 @@ containing a value of this type.
         public static final int top_action_bar=0x7f050026;
         public static final int top_box=0x7f050044;
         public static final int tv_d=0x7f05001f;
-        public static final int txt=0x7f05004c;
+        public static final int txt=0x7f05004d;
         public static final int up=0x7f050027;
         public static final int useLogo=0x7f050003;
-        public static final int username=0x7f05004f;
+        public static final int username=0x7f050050;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {
@@ -1398,7 +1398,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
-        public static final int action_example=0x7f0a003d;
+        public static final int action_example=0x7f0a003a;
         public static final int action_settings=0x7f0a002a;
         public static final int app_name=0x7f0a0028;
         /**   Title for notification shown when GooglePlayServices needs to be
@@ -1505,17 +1505,14 @@ containing a value of this type.
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f0a0027;
-        public static final int navigation_drawer_close=0x7f0a003c;
-        public static final int navigation_drawer_open=0x7f0a003b;
+        public static final int navigation_drawer_close=0x7f0a0039;
+        public static final int navigation_drawer_open=0x7f0a0038;
         public static final int pass_menu=0x7f0a0035;
         public static final int passconfirm=0x7f0a0030;
         public static final int password=0x7f0a002f;
         public static final int register=0x7f0a0033;
         public static final int title_activity_main_map=0x7f0a0037;
         public static final int title_activity_splash=0x7f0a002b;
-        public static final int title_section1=0x7f0a0038;
-        public static final int title_section2=0x7f0a0039;
-        public static final int title_section3=0x7f0a003a;
         public static final int username=0x7f0a002e;
     }
     public static final class style {
