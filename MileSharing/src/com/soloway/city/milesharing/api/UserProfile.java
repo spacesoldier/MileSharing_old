@@ -14,6 +14,22 @@ public class UserProfile {
 	private boolean isOccupied;
 	private boolean blackmark;
 	
+	public String getRegData(){
+		StringBuilder result = new StringBuilder();
+		result.append("&first_name=").append(firstName).
+		append("&second_name=").append(secondName).
+		append("&login=").append(userLogin).
+		append("&password=").append(userPassword);
+		return result.toString();
+	}
+	
+	public String getAuthData(){
+		StringBuilder result = new StringBuilder();
+		result.append("&login=").append(userLogin).
+		append("&password=").append(userPassword);
+		return result.toString();
+	}
+	
 	public UserProfile() {
 		firstName = "empty";
 		secondName = "empty";
