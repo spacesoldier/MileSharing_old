@@ -30,7 +30,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCHQD4pgwD0z8t2I0eTmmJsiCWoO-nZFC4" />
+            android:value="AIzaSyA383H1QAca1538C42oJ6RXCNnHg6cEf-g" />
 
         <activity
             android:name="com.soloway.city.milesharing.SplashActivity"
