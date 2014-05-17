@@ -142,6 +142,8 @@ public class MainMapActivity extends ActionBarActivity implements
     private Marker marker;
     private LinearLayout layout;
     private LinearLayout layout_top;
+    private TextView tvDis;
+    private TextView tvDur;
     
     private MainMapActivity mainMapActivity;
     int dur;
@@ -234,36 +236,6 @@ public class MainMapActivity extends ActionBarActivity implements
             
             
             ///MY PART
-            googleMap.setInfoWindowAdapter(new InfoWindowAdapter() {
-
-                // Use default InfoWindow frame
-                @Override
-                public View getInfoWindow(Marker arg0) {
-                    return null;
-                }
-
-                // Defines the contents of the InfoWindow
-                @Override
-                public View getInfoContents(Marker arg0) {
-
-                    // Getting view from the layout file info_window_layout
-                    View v = getLayoutInflater().inflate(R.layout.info_window, null);
-
-                    // Getting the position from the marker
-                    LatLng latLng = arg0.getPosition();
-
-                    //Finding buttons\
-                    Button bGo = ((Button) v.findViewById(R.id.btn_ok));
-                    Button bCancel = ((Button) v.findViewById(R.id.btn_cancel));
-                     
-                    //bGo.setText("dgfd");
-                  
-   	            noBtns = false;
-                    
-                    return v;
-
-                }
-            });
             
             prefs = this.getSharedPreferences("com.soloway.city.milesharing", Context.MODE_PRIVATE);
             
@@ -335,40 +307,7 @@ public class MainMapActivity extends ActionBarActivity implements
 	        layout_top = (LinearLayout) findViewById(R.id.top_box);
 
 	        
-	        marker.showInfoWindow();
-            
-            
-            googleMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
-  	        public void onInfoWindowClick(Marker marker){
-                  	if (prefs != null)
-                  	{
-                  		Gson gson = new Gson();
-                  	    String json = prefs.getString("UserSession", "");
-                  	    session = gson.fromJson(json, UserSession.class);
-                  	    
-                  	    if (session != null){
-                  	    	//attempt to login or register
-                  	    	boolean first_attempt = true;
-                  	    	showLoginDialog(first_attempt, false);
-                  	    	
-                  	    } else {
-                  	    	// nice. is it the first launch? Ok. let's create session!
-                  	    	session = new UserSession();
-                  	    	Editor prefsEditor = prefs.edit();
-                  	        Gson gsonBuffer = new Gson();
-                  	        String jsonBuffer = gsonBuffer.toJson(session);
-                  	        prefsEditor.putString("UserSession", jsonBuffer);
-                  	        prefsEditor.commit();
-                  	        
-                  	        // cool. so, it's time to login or register. isn't it?
-                  	        boolean first_attempt = true;
-                  	        showLoginDialog(first_attempt, false);
-                  	    }
-                  	    
-
-                  	}
-                    }
-                  });
+	        
   
 	        
 	        
@@ -441,6 +380,7 @@ public class MainMapActivity extends ActionBarActivity implements
 	                    	
 	                    	UserProfile authUser = new UserProfile();
 	                    	if (reg){
+	                    		//регистрация пользователя
 	                    		EditText firstNameEdit = (EditText) newUserData.findViewById(R.id.txt_first_name);
 	                    		authUser.setFirstName(firstNameEdit.getText().toString());
 	                    		EditText lastNameEdit = (EditText) newUserData.findViewById(R.id.txt_last_name);
@@ -461,11 +401,12 @@ public class MainMapActivity extends ActionBarActivity implements
 		                        }
 
 		                        hashPass =  sb.toString();
+		                        
 							} catch (NoSuchAlgorithmException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-	                        
+							
 	                    	
 	                    	authUser.setUserPassword(hashPass);
 	                    	
@@ -538,7 +479,7 @@ public class MainMapActivity extends ActionBarActivity implements
 //                            nameValuePairs.add(new BasicNameValuePair("login", login.getText().toString()));?
                             //пароль
 //                            nameValuePairs.add(new BasicNameValuePair("pass", pass.getText().toString()));
-                            
+                           
                             
                             //собераем их вместе и посылаем на сервер
 //                            postMethod.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -578,7 +519,7 @@ public class MainMapActivity extends ActionBarActivity implements
 	        @Override
 	        protected void onPreExecute() {
 	              Dialog = new ProgressDialog(MainMapActivity.this);
-	              Dialog.setMessage("Loading route...");
+	              Dialog.setMessage("Поиск маршрута...");
 	              Dialog.show();
 	        }
 
@@ -599,7 +540,84 @@ public class MainMapActivity extends ActionBarActivity implements
 	             dur =  v2GetRouteDirection.getDurationValue(document);
 	             dis  =  v2GetRouteDirection.getDistanceValue(document);
 	              
-	              
+	             
+	             googleMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+
+	                 // Use default InfoWindow frame
+	                 @Override
+	                 public View getInfoWindow(Marker arg0) {
+	                     return null;
+	                 }
+
+	                 // Defines the contents of the InfoWindow
+	                 @Override
+	                 public View getInfoContents(Marker arg0) {
+
+	                     // Getting view from the layout file info_window_layout
+	                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
+
+	                     // Getting the position from the marker
+	                     LatLng latLng = arg0.getPosition();
+
+	                     //Finding buttons\
+	                     //Button bGo = ((Button) v.findViewById(R.id.btn_ok));
+	                     //Button bCancel = ((Button) v.findViewById(R.id.btn_cancel));
+	                      
+	                     
+	                     tvDis = (TextView) v.findViewById(R.id.textLength);
+	                     tvDur = (TextView) v.findViewById(R.id.textTime);
+	                    // tvDis.setText("Расстояние: "+String.valueOf(dis));
+	                    // tvDur.setText("Время: "+String.valueOf(dur));
+	                     tvDis.setText("Расстояние: "+String.valueOf((float) dis/1000)+ " км.");
+	                     tvDur.setText("Время: "+String.valueOf((int) dur/60)+" мин.");
+	                     
+	                     //bGo.setText("dgfd");
+	                   
+	    	            noBtns = false;
+	                     
+	                     return v;
+
+	                 }
+	             });
+	             
+	             marker.showInfoWindow();
+	             
+	             
+	             googleMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
+	   	        public void onInfoWindowClick(Marker marker){
+	                   	if (prefs != null)
+	                   	{
+	                   		Gson gson = new Gson();
+	                   	    String json = prefs.getString("UserSession", "");
+	                   	    session = gson.fromJson(json, UserSession.class);
+	                   	    
+	                   	    if (session != null){
+	                   	    	//attempt to login or register
+	                   	    	boolean first_attempt = true;
+	                   	    	showLoginDialog(first_attempt, false);
+	                   	    	
+	                   	    } else {
+	                   	    	// nice. is it the first launch? Ok. let's create session!
+	                   	    	session = new UserSession();
+	                   	    	Editor prefsEditor = prefs.edit();
+	                   	        Gson gsonBuffer = new Gson();
+	                   	        String jsonBuffer = gsonBuffer.toJson(session);
+	                   	        prefsEditor.putString("UserSession", jsonBuffer);
+	                   	        prefsEditor.commit();
+	                   	        
+	                   	        // cool. so, it's time to login or register. isn't it?
+	                   	        boolean first_attempt = true;
+	                   	        showLoginDialog(first_attempt, false);
+	                   	    }
+	                   	    
+
+	                   	}
+	                     }
+	                   });
+	             
+	             
+	             
+                 
 	              ArrayList<LatLng> directionPoint = v2GetRouteDirection.getDirection(document);
 	              PolylineOptions rectLine = new PolylineOptions().width(10).color(
 	                          Color.BLUE);

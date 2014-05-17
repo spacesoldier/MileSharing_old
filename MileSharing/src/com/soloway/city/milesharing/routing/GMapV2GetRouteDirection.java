@@ -1,9 +1,17 @@
 package com.soloway.city.milesharing.routing;
 
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -55,12 +63,19 @@ public class GMapV2GetRouteDirection {
     }
 
     public int getDurationValue (Document doc) {
+    	
         NodeList nl1 = doc.getElementsByTagName("duration");
-        Node node1 = nl1.item(0);
-        NodeList nl2 = node1.getChildNodes();
-        Node node2 = nl2.item(getNodeIndex(nl2, "value"));
-        Log.i("DurationValue", node2.getTextContent());
-        return Integer.parseInt(node2.getTextContent());
+        
+        int sumdur = 0;
+        for(int i=0;i<nl1.getLength();i++){
+        	Node node1 = nl1.item(i);
+            NodeList nl2 = node1.getChildNodes();
+            Node node2 = nl2.item(getNodeIndex(nl2, "value"));
+            Log.i("DurationValue", node2.getTextContent());
+        	sumdur = sumdur+Integer.parseInt(node2.getTextContent());
+        	
+        }
+		return sumdur;
     }
 
     public String getDistanceText (Document doc) {
@@ -74,11 +89,17 @@ public class GMapV2GetRouteDirection {
 
     public int getDistanceValue (Document doc) {
         NodeList nl1 = doc.getElementsByTagName("distance");
-        Node node1 = nl1.item(0);
-        NodeList nl2 = node1.getChildNodes();
-        Node node2 = nl2.item(getNodeIndex(nl2, "value"));
-        Log.i("DistanceValue", node2.getTextContent());
-        return Integer.parseInt(node2.getTextContent());
+        int sumdur = 0;
+        for(int i=0;i<nl1.getLength();i++){
+        	Node node1 = nl1.item(i);
+            NodeList nl2 = node1.getChildNodes();
+            Node node2 = nl2.item(getNodeIndex(nl2, "value"));
+            Log.i("DurationValue", node2.getTextContent());
+        	sumdur = sumdur+Integer.parseInt(node2.getTextContent());
+        	
+        }
+        
+		return sumdur;
     }
 
     public String getStartAddress (Document doc) {
