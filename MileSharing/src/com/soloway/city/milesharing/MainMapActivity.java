@@ -29,7 +29,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -46,6 +49,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +71,9 @@ import com.google.gson.Gson;
 import com.soloway.city.milesharing.api.UserProfile;
 import com.soloway.city.milesharing.api.UserSession;
 import com.soloway.city.milesharing.api.UsersHelper;
+import com.soloway.city.milesharing.fragments.NotifyFragment;
+import com.soloway.city.milesharing.fragments.PassDriveContentFragment;
+import com.soloway.city.milesharing.fragments.PassDriveFragment;
 import com.soloway.city.milesharing.routing.GMapV2GetRouteDirection;
 
 public class MainMapActivity extends ActionBarActivity implements
@@ -285,7 +292,7 @@ public class MainMapActivity extends ActionBarActivity implements
 		public void onMapLongClick(LatLng point) {
 			//googleMap.addMarker(new MarkerOptions().position(point).title("Go"));
 			
-			
+	    	
 			
 	        
 	        toPosition = new LatLng(point.latitude, point.longitude);
@@ -304,13 +311,35 @@ public class MainMapActivity extends ActionBarActivity implements
 	                .draggable(true).visible(true));
 	       
 	        layout = (LinearLayout) findViewById(R.id.bottom_box);
-	        layout_top = (LinearLayout) findViewById(R.id.top_box);
+	        //layout_top = (LinearLayout) findViewById(R.id.top_box);
 
-	        
-	        
+	        //Нашли лейаут, можно туда добавить кнопки!!!
+
+	        //Здесь надо вывести про то, что мы подобрали попутчика
+	        FragmentManager fragMan = getSupportFragmentManager();
+            FragmentTransaction fragTransaction = fragMan.beginTransaction();
+            RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
+            Fragment myFrag = new NotifyFragment();
+            fragTransaction.add(rl.getId(), myFrag , "fragmentNotify");
+            fragTransaction.commit();
   
-	        
-	        
+            //Фрагмент выбора роли
+            Fragment fragPD = new PassDriveFragment();
+            getSupportFragmentManager().beginTransaction().add(rl.getId(),fragPD,"fragmentPassDriver").commit();
+            
+            /*
+            FragmentManager fm = getSupportFragmentManager();
+            PassDriveFragment pdf = (PassDriveFragment) fm.findFragmentByTag("fragmentPassDriver");
+            PassDriveContentFragment pdfc = (PassDriveContentFragment) fm.findFragmentByTag("tabPass");
+            pdfc.setParent(pdf);
+           */
+            /*
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(currentFragment);
+            fragmentTransaction.show(nextFragment);
+            fragmentTransaction.commit();
+            */
+            //.findFragmentByTag("tabPass");
 	             
 	        }
 	    

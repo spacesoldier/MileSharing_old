@@ -65,13 +65,20 @@ public class UsersHelper {
                 HttpClient httpClient = new DefaultHttpClient();
                 //HttpPost httpPost = new HttpPost("http://78.47.251.3/users.php?auth_user"+profile.getAuthData());
                 
+                 String urlRequest = "http://1.soloway-milesharing.appspot.com/milesharingbackend/locate";
+                 urlRequest = urlRequest+"?login="+String.valueOf(profile.getUserLogin());
+                 urlRequest = urlRequest+"&pass="+String.valueOf(profile.getUserPassword());
+                 HttpPost httpPost = new HttpPost(urlRequest);
+                 
+                /* 
+                 * 19.05.14 »—œ–¿¬»À
                 HttpPost httpPost = new HttpPost("http://1.soloway-milesharing.appspot.com/milesharingbackend/locate");
-                
+               
                 HttpParams params = httpPost.getParams();
                 params.setParameter("login", profile.getUserLogin());
                 params.setParameter("pass", profile.getUserPassword());
                 httpPost.setParams(params);
-                
+                */
 
                 // Execute HTTP Post Request
                 // Making HTTP Request

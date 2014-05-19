@@ -3,7 +3,7 @@
     android:id="@+id/menu_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333"
+    android:background="@color/blue_transparent"
     android:choiceMode="singleChoice"
     tools:context="com.soloway.city.milesharing.NavigationDrawerFragment"
     android:layout_gravity="start"

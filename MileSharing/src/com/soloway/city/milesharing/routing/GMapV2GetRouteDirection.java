@@ -67,13 +67,15 @@ public class GMapV2GetRouteDirection {
         NodeList nl1 = doc.getElementsByTagName("duration");
         
         int sumdur = 0;
+        int[] ll = new int[nl1.getLength()];
+        
         for(int i=0;i<nl1.getLength();i++){
         	Node node1 = nl1.item(i);
             NodeList nl2 = node1.getChildNodes();
             Node node2 = nl2.item(getNodeIndex(nl2, "value"));
             Log.i("DurationValue", node2.getTextContent());
         	sumdur = sumdur+Integer.parseInt(node2.getTextContent());
-        	
+        	ll[i] = Integer.parseInt(node2.getTextContent());
         }
 		return sumdur;
     }

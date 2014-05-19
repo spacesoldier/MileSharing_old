@@ -1,0 +1,5 @@
+package com.soloway.city.milesharing.dialogs;
+
+public class NotifyDialog {
+
+}
