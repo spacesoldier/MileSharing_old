@@ -106,24 +106,20 @@ public class MainMapActivity extends ActionBarActivity implements
     Integer[] imageId_p = {
   	      R.drawable.pass_icon,
   	     
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none
+  	      R.drawable.history_icon,
+  	      R.drawable.route_icon,
+  	      R.drawable.people_icon,
+  	      R.drawable.preferences_icon
   	  
   	  };
-  
+    
     Integer[] imageId_d = {
     	      R.drawable.driver_icon,
     	     
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none
+    	      R.drawable.history_icon,
+      	      R.drawable.route_icon,
+      	      R.drawable.people_icon,
+      	      R.drawable.preferences_icon
     	  
     	  };
     List<Overlay> mapOverlays;
@@ -286,7 +282,20 @@ public class MainMapActivity extends ActionBarActivity implements
 	    
 	    private boolean noBtns = true;
 	    
+	    private void showNotifyDialog(){
+	    	FragmentManager fragMan = getSupportFragmentManager();
+            FragmentTransaction fragTransaction = fragMan.beginTransaction();
+            RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
+            Fragment myFrag = new NotifyFragment();
+            fragTransaction.add(rl.getId(), myFrag , "fragmentNotify");
+            fragTransaction.commit();
+	    }
 	    
+	    private void showRole(){
+	    	RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
+            Fragment fragPD = new PassDriveFragment();
+            getSupportFragmentManager().beginTransaction().add(rl.getId(),fragPD,"fragmentPassDriver").commit();
+	    }
 	    
 	    @Override
 		public void onMapLongClick(LatLng point) {
@@ -311,36 +320,11 @@ public class MainMapActivity extends ActionBarActivity implements
 	                .draggable(true).visible(true));
 	       
 	        layout = (LinearLayout) findViewById(R.id.bottom_box);
-	        //layout_top = (LinearLayout) findViewById(R.id.top_box);
-
-	        //Нашли лейаут, можно туда добавить кнопки!!!
-
-	        //Здесь надо вывести про то, что мы подобрали попутчика
-	        FragmentManager fragMan = getSupportFragmentManager();
-            FragmentTransaction fragTransaction = fragMan.beginTransaction();
-            RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
-            Fragment myFrag = new NotifyFragment();
-            fragTransaction.add(rl.getId(), myFrag , "fragmentNotify");
-            fragTransaction.commit();
-  
+	        
+	        //showNotifyDialog();
             //Фрагмент выбора роли
-            Fragment fragPD = new PassDriveFragment();
-            getSupportFragmentManager().beginTransaction().add(rl.getId(),fragPD,"fragmentPassDriver").commit();
-            
-            /*
-            FragmentManager fm = getSupportFragmentManager();
-            PassDriveFragment pdf = (PassDriveFragment) fm.findFragmentByTag("fragmentPassDriver");
-            PassDriveContentFragment pdfc = (PassDriveContentFragment) fm.findFragmentByTag("tabPass");
-            pdfc.setParent(pdf);
-           */
-            /*
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.hide(currentFragment);
-            fragmentTransaction.show(nextFragment);
-            fragmentTransaction.commit();
-            */
-            //.findFragmentByTag("tabPass");
-	             
+	        //showRole();
+	        
 	        }
 	    
 	 
@@ -414,6 +398,10 @@ public class MainMapActivity extends ActionBarActivity implements
 	                    		authUser.setFirstName(firstNameEdit.getText().toString());
 	                    		EditText lastNameEdit = (EditText) newUserData.findViewById(R.id.txt_last_name);
 	                    		authUser.setSecondName(lastNameEdit.getText().toString());
+	                    		
+	                    		EditText emailEdit = (EditText) newUserData.findViewById(R.id.txt_email);
+	                    		authUser.setEmail(emailEdit.getText().toString());
+	                    		
 	                    	}
 	                    	authUser.setUserLogin(loginEdit.getText().toString());
 	                    	
@@ -543,6 +531,36 @@ public class MainMapActivity extends ActionBarActivity implements
 	// ROUTE LOAD SPLASH
 	    private class GetRouteTask extends AsyncTask<String, Void, String> {
 	        
+	    	private void showLogin(){
+	    		if (prefs != null)
+               	{
+               		Gson gson = new Gson();
+               	    String json = prefs.getString("UserSession", "");
+               	    session = gson.fromJson(json, UserSession.class);
+               	    
+               	    if (session != null){
+               	    	//attempt to login or register
+               	    	boolean first_attempt = true;
+               	    	showLoginDialog(first_attempt, false);
+               	    	
+               	    } else {
+               	    	// nice. is it the first launch? Ok. let's create session!
+               	    	session = new UserSession();
+               	    	Editor prefsEditor = prefs.edit();
+               	        Gson gsonBuffer = new Gson();
+               	        String jsonBuffer = gsonBuffer.toJson(session);
+               	        prefsEditor.putString("UserSession", jsonBuffer);
+               	        prefsEditor.commit();
+               	        
+               	        // cool. so, it's time to login or register. isn't it?
+               	        boolean first_attempt = true;
+               	        showLoginDialog(first_attempt, false);
+               	    }
+               	    
+
+               	}
+	    	}
+	    	
 	        private ProgressDialog Dialog;
 	        String response = "";
 	        @Override
@@ -614,33 +632,7 @@ public class MainMapActivity extends ActionBarActivity implements
 	             
 	             googleMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
 	   	        public void onInfoWindowClick(Marker marker){
-	                   	if (prefs != null)
-	                   	{
-	                   		Gson gson = new Gson();
-	                   	    String json = prefs.getString("UserSession", "");
-	                   	    session = gson.fromJson(json, UserSession.class);
-	                   	    
-	                   	    if (session != null){
-	                   	    	//attempt to login or register
-	                   	    	boolean first_attempt = true;
-	                   	    	showLoginDialog(first_attempt, false);
-	                   	    	
-	                   	    } else {
-	                   	    	// nice. is it the first launch? Ok. let's create session!
-	                   	    	session = new UserSession();
-	                   	    	Editor prefsEditor = prefs.edit();
-	                   	        Gson gsonBuffer = new Gson();
-	                   	        String jsonBuffer = gsonBuffer.toJson(session);
-	                   	        prefsEditor.putString("UserSession", jsonBuffer);
-	                   	        prefsEditor.commit();
-	                   	        
-	                   	        // cool. so, it's time to login or register. isn't it?
-	                   	        boolean first_attempt = true;
-	                   	        showLoginDialog(first_attempt, false);
-	                   	    }
-	                   	    
-
-	                   	}
+	   	        			showRole();
 	                     }
 	                   });
 	             

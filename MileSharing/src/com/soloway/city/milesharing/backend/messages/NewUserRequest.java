@@ -6,7 +6,10 @@ public class NewUserRequest {
 	private String firstname;
 	private String middlename;
 	private String lastname;
+	private String email;
+	private String phone;
 	private String role;
+	private String devicetype;
 	
 	
 	public String getLogin() {
@@ -44,6 +47,24 @@ public class NewUserRequest {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getDevicetype() {
+		return devicetype;
+	}
+	public void setDevicetype(String devicetype) {
+		this.devicetype = devicetype;
 	}
 	
 }

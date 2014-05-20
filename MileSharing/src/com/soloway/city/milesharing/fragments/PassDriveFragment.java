@@ -1,5 +1,6 @@
 package com.soloway.city.milesharing.fragments;
 
+import com.soloway.city.milesharing.MainMapActivity;
 import com.soloway.city.milesharing.R;
 
 import android.content.Intent;
@@ -64,6 +65,14 @@ public class PassDriveFragment extends Fragment {
 
         return rootView;
     }
+    
+    public void go(){
+    	MainMapActivity mma = (MainMapActivity) getActivity();
+    	mma.showLoginDialog(true, false);
+    	//clos();
+		//getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();		
+	}
+    
     
     public void clos(){
 		getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();		

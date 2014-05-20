@@ -3,6 +3,7 @@ package com.soloway.city.milesharing.backend.messages;
 public class NewUserResponse {
 	private String userId;
 	private String sessionId;
+	private String token;
 	private int statusCode;
 	private String errorMessage;
 	
@@ -29,5 +30,11 @@ public class NewUserResponse {
 	}
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

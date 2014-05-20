@@ -7,37 +7,34 @@
     <string name="title_activity_splash">MileSharing</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="passconfirm">Confirm pass</string>
-    <string name="firstname">First name</string>
-    <string name="lastname">Last name</string>
-    <string name="register">Register</string>
-    <string name="cancel">Cancel</string>
-
+    <string name="username">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="passconfirm">Подтвердите пароль</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="register">Регистрация</string>
+    <string name="cancel">Отмена</string>
+    <string name="email">E-mail</string>
     <string-array name="items">
         <item>New travel</item>
         <item>Item 2</item>
-        <item>Item 3</item>
         <item>Item 4</item>
         <item>Item 5</item>
         <item>Prefernces</item>
     </string-array>
     <string-array name="items_pass">
-        <item>Find driver</item>
-        <item>History</item>
-        <item>Routes</item>
-        <item>People</item>
-        <item>Competitions</item>
-        <item>Prefernces</item>
+        <item>Найти машину</item>
+        <item>История</item>
+        <item>Маршрут</item>
+        <item>Люди</item>
+        <item>Настройки</item>
     </string-array>
     <string-array name="items_driver">
-        <item>Find passanger</item>
-        <item>History</item>
-        <item>Routes</item>
-        <item>People</item>
-        <item>Popular</item>
-        <item>Prefernces</item>
+        <item>Подвезти</item>
+        <item>История</item>
+        <item>Маршрут</item>
+        <item>Люди</item>
+        <item>Настройки</item>
     </string-array>
 
     <string name="pass_menu">Passanger</string>

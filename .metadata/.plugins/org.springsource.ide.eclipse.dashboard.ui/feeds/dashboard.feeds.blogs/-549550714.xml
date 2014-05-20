@@ -5,7 +5,28 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2014-05-15T08:48:00Z</updated>
+  <updated>2014-05-19T12:32:00Z</updated>
+  <entry>
+    <title>Demo: Zero to Stream processing in 7 minutes with Spring XD</title>
+    <link rel="alternate" href="https://spring.io/blog/2014/05/19/demo-zero-to-stream-processing-in-7-minutes-with-spring-xd" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Pieter Humphrey</name>
+    </author>
+    <id>tag:spring.io,2014-05-19:1576</id>
+    <updated>2014-05-19T12:32:00Z</updated>
+    <content type="html">&lt;p&gt;Speaker: Pieter Humphrey&lt;/p&gt;
+
+&lt;p&gt;Creating a stream of live twitter data for an analytics dashboard using Spring XD, a JavaScript D3 component / Spring XD's REST API. &lt;/p&gt;
+
+&lt;p&gt;Source code:&lt;a href="https://github.com/spring-projects/spring-xd-samples/tree/master/analytics-dashboard"&gt;https://github.com/spring-projects/spring-xd-samples/tree/master/analytics-dashboard&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;Learn more about Spring XD: &lt;a href="http://projects.spring.io/spring-xd"&gt;http://projects.spring.io/spring-xd&lt;/a&gt; &lt;/p&gt;
+
+&lt;p&gt;Learn more about Spring for Apache Hadoop: &lt;a href="http://projects.spring.io/spring-hadoop"&gt;http://projects.spring.io/spring-hadoop&lt;/a&gt; &lt;/p&gt;
+
+&lt;iframe width="420" height="315" src="//www.youtube.com/embed/nOfzrQ6CdKI" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
   <entry>
     <title>Webinar Replay: Spring Integration 4.0 - The New Frontier</title>
     <link rel="alternate" href="https://spring.io/blog/2014/05/15/webinar-replay-spring-integration-4-0-the-new-frontier" />
@@ -1008,34 +1029,6 @@ new &lt;a href="https://spring.io/guides?filter=yarn"&gt;Spring IO Guides&lt;/a&
 
 &lt;p&gt;Cheers,&lt;br&gt;
 Juergen&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Integration 4.0 Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2014/04/30/spring-integration-4-0-released" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Gary Russell</name>
-    </author>
-    <id>tag:spring.io,2014-04-29:1546</id>
-    <updated>2014-04-30T14:25:00Z</updated>
-    <content type="html">&lt;p&gt;We are pleased to announce the 4.0.0.RELEASE version of Spring Integration is now available.&lt;/p&gt;
-
-&lt;p&gt;The artifacts are available in the Spring repository (&lt;code&gt;repo.spring.io/release&lt;/code&gt;) and Maven Central now.&lt;/p&gt;
-
-&lt;p&gt;The new features have been covered in some depth in the &lt;a href="https://spring.io/blog/2014/03/31/spring-integration-3-0-2-and-4-0-milestone-4-released"&gt;Milestone 4&lt;/a&gt; and &lt;a href="https://spring.io/blog/2014/04/15/spring-integration-4-0-release-candidate-available"&gt;Release Candidate&lt;/a&gt; announcements (including Spring Boot examples) but, to summarize:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Requires Spring Framework 4.0.3 or above&lt;/li&gt;
-&lt;li&gt;Greatly expanded annotation support for configuring integration flows, laying the groundwork for the &lt;a href="https://github.com/spring-projects/spring-integration-extensions/tree/master/spring-integration-java-dsl"&gt;Java DSL&lt;/a&gt; which is in progress in the extensions repo&lt;/li&gt;
-&lt;li&gt;New endpoints, and more...&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;For changes since the release candidate, see the &lt;a href="https://jira.spring.io/secure/ReleaseNote.jspa?projectId=10121&amp;amp;version=14286"&gt;GA release notes&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;We will be presenting a &lt;a href="https://spring.io/blog/2014/04/22/webinar-spring-integration-4-0-the-new-frontier"&gt;Webinar&lt;/a&gt; highlighting some of the features in this important new release next month.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;SpringOne 2GX 2014 is around the corner&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Book your place at &lt;a href="http://www.springone2gx.com/"&gt;SpringOne in Dallas, TX&lt;/a&gt; for Sept 8-11 soon. It's simply the best opportunity to find out first
-hand all that's going on and to provide direct feedback. Expect a number of significant new announcements this year. We are anticipating that several in-depth Spring-Integration sessions will be presented.&lt;/p&gt;</content>
   </entry>
 </feed>
 

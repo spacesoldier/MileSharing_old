@@ -4,6 +4,7 @@ public class UserProfile {
 	private String firstName;
 	private String secondName;
 	private String userLogin;
+	private String email;
 	
 	//MD5 of password
 	// I know, it's very stupid :)
@@ -33,6 +34,7 @@ public class UserProfile {
 	public UserProfile() {
 		firstName = "empty";
 		secondName = "empty";
+		email = "empty";
 		userLogin = "empty";
 		userPassword = "12345";
 		isDriver = false;
@@ -48,6 +50,14 @@ public class UserProfile {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public String getSecondName() {
 		return secondName;
 	}
@@ -60,6 +70,7 @@ public class UserProfile {
 	public void setUserLogin(String userLogin) {
 		this.userLogin = userLogin;
 	}
+	
 	public String getUserPassword() {
 		return userPassword;
 	}

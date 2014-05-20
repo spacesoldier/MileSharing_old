@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="commit" key="selection"/>
+		<item value="Session" key="selection"/>
 		<list key="findhistory">
-			<item value="commit"/>
-			<item value="fragment"/>
-			<item value="navigat"/>
-			<item value="infowind"/>
-			<item value="@"/>
-			<item value="new"/>
-			<item value="api"/>
-			<item value="longc"/>
+			<item value="session"/>
+			<item value="reg"/>
+			<item value="first_attempt"/>
+			<item value="first_a"/>
+			<item value="firstat"/>
+			<item value="ш"/>
+			<item value="showLoginDialog"/>
+			<item value="sh"/>
 		</list>
 		<list key="replacehistory">
 		</list>
