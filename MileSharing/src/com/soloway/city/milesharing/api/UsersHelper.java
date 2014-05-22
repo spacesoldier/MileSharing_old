@@ -18,14 +18,20 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 import com.google.gson.Gson;
 import com.soloway.city.milesharing.backend.messages.LoginUserRequest;
 import com.soloway.city.milesharing.backend.messages.LoginUserResponse;
+import com.soloway.city.milesharing.backend.messages.LogoutUserRequest;
 import com.soloway.city.milesharing.backend.messages.NewUserRequest;
 import com.soloway.city.milesharing.backend.messages.NewUserResponse;
 
 public class UsersHelper {
-	
+	//SharedPreferences prefs = getSharedPreferences("com.soloway.transport.milesharing", Context.MODE_PRIVATE);
+    
 	public static UserSession pushUser(final UserProfile profile){
 		
 		final UserSession result = new UserSession();
@@ -35,15 +41,47 @@ public class UsersHelper {
             public void run() {
 
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://78.47.251.3/users.php?push_user"+profile.getRegData());
+                //HttpPost httpPost = new HttpPost("http://78.47.251.3/users.php?push_user"+profile.getRegData());
+                String urlRegister="http://1.soloway-milesharing.appspot.com/milesharingbackend/reg_user";
+                NewUserRequest regRequest = new NewUserRequest();
                 
+                regRequest.setLogin(profile.getUserLogin());
+                regRequest.setPass(profile.getUserPassword());
+                regRequest.setDevicetype("android");
+                regRequest.setFirstname(profile.getFirstName());
+                regRequest.setLastname(profile.getSecondName());
+                regRequest.setEmail(profile.getEmail());
+                regRequest.setPhone("<empty>");
+                regRequest.setMiddlename("<empty>");
+                regRequest.setRole("<empty>");
+                //private String role;
+                //private String devicetype;
+                
+                Gson gson = new Gson();
+                String regResultStr = gson.toJson(regRequest);
+                
+                try {
+					regResultStr = URLEncoder.encode(regResultStr, "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+                urlRegister = urlRegister +"?data="+regResultStr;
+               
+                HttpPost httpPost = new HttpPost(urlRegister);
 
                 // Making HTTP Request
                 try {
+                	HttpResponse response = httpClient.execute(httpPost);
+                    String result1 = EntityUtils.toString(response.getEntity());
+                	LoginUserResponse newRecResp = gson.fromJson(result1, LoginUserResponse.class);
+                    /*
                     HttpResponse response = httpClient.execute(httpPost);
                     if (response.toString().equalsIgnoreCase("OK")){
                     	result.setOnline(true);
                     }
+                    */
                     result.setOnline(true);
                     
                 } catch (ClientProtocolException e) {
@@ -60,8 +98,11 @@ public class UsersHelper {
 		
 		return result;
 	}
+
+	
 	
 	public static UserSession authUser(final UserProfile profile){
+		
 		
 		final UserSession result = new UserSession();
 		
@@ -83,6 +124,8 @@ public class UsersHelper {
                  LoginUserRequest regRequest = new LoginUserRequest();
                  regRequest.setLogin(profile.getUserLogin());
                  regRequest.setPass(profile.getUserPassword());
+                 regRequest.setDevice_type("android");
+                 
                  Gson gson = new Gson();
                  String regResultStr = gson.toJson(regRequest);
                  
@@ -127,10 +170,15 @@ public class UsersHelper {
                     */
                 	HttpResponse response = httpClient.execute(httpPost);
                     String result1 = EntityUtils.toString(response.getEntity());
-                    	
-                	Gson gson1 = new Gson();
                 	LoginUserResponse newRecResp = gson.fromJson(result1, LoginUserResponse.class);
-                    result.setOnline(true);
+                   
+           	        result.setSessionId(newRecResp.getSessionId());
+           	        result.setTokenId(newRecResp.getToken());
+           	        result.setUserId(newRecResp.getUserId());
+     	        
+           	        
+           	        
+                	result.setOnline(true);
                     
                     // writing response to log
 //                    Log.d("Http Response:", response.toString());
@@ -149,19 +197,39 @@ public class UsersHelper {
 		return result;
 	}
 	
-	public static UserSession exitUser(UserProfile profile){
+	public static UserSession exitUser(final UserProfile profile){
 		
 		new Thread( new Runnable() {
             @Override
             public void run() {
 
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://78.47.251.3/users.php?exit");
+               //HttpPost httpPost = new HttpPost("http://78.47.251.3/users.php?exit");
+                String urlLogout="http://1.soloway-milesharing.appspot.com/milesharingbackend/logout_user";
+                LogoutUserRequest regRequest = new LogoutUserRequest();
                 
+                regRequest.setLogin(profile.getUserLogin());
+                Gson gson = new Gson();
+                String regResultStr = gson.toJson(regRequest);
+                
+                try {
+					regResultStr = URLEncoder.encode(regResultStr, "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+                urlLogout = urlLogout +"?data="+regResultStr;
+               
+                HttpPost httpPost = new HttpPost(urlLogout);
 
                 // Making HTTP Request
                 try {
-                    HttpResponse response = httpClient.execute(httpPost);
+                	HttpResponse response = httpClient.execute(httpPost);
+                    String result1 = EntityUtils.toString(response.getEntity());
+                	LoginUserResponse newRecResp = gson.fromJson(result1, LoginUserResponse.class);
+                    //result.setOnline(true);
+                    
                     if (response.toString().equalsIgnoreCase("OK")){
                     	
                     }

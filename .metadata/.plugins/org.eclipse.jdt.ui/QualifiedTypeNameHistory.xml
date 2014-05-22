@@ -49,4 +49,5 @@
 <fullyQualifiedTypeName name="com.soloway.city.milesharing.MainMapActivity"/>
 <fullyQualifiedTypeName name="android.widget.SeekBar"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.soloway.city.milesharing.backend.messages.LogoutUserRequest"/>
 </qualifiedTypeNameHistroy>

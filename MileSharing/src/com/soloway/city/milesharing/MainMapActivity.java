@@ -75,6 +75,7 @@ import com.soloway.city.milesharing.fragments.NotifyFragment;
 import com.soloway.city.milesharing.fragments.PassDriveContentFragment;
 import com.soloway.city.milesharing.fragments.PassDriveFragment;
 import com.soloway.city.milesharing.routing.GMapV2GetRouteDirection;
+import com.soloway.transport.milesharing.R;
 
 public class MainMapActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, LocationListener, 
@@ -240,7 +241,7 @@ public class MainMapActivity extends ActionBarActivity implements
             
             ///MY PART
             
-            prefs = this.getSharedPreferences("com.soloway.city.milesharing", Context.MODE_PRIVATE);
+            prefs = this.getSharedPreferences("com.soloway.transport.milesharing", Context.MODE_PRIVATE);
             
             
           
@@ -445,6 +446,9 @@ public class MainMapActivity extends ActionBarActivity implements
 	                    		}
 	                    		
 	                    		session.setSessionId(tmpSession.getSessionId());
+	                    		session.setTokenId(tmpSession.getTokenId());
+	                    		session.setUserId(tmpSession.getUserId());
+	                    		
 	                    		session.setOnline(tmpSession.isOnline());
 	                    		
 	                    		dialog.dismiss();

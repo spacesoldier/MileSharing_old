@@ -1,6 +1,6 @@
 package com.soloway.city.milesharing.fragments;
 
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +16,7 @@ public class NotifyFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View viewHierarchy = inflater.inflate(R.layout.notify_fragment, container, false);
+		View viewHierarchy = inflater.inflate(R.layout.fragment_notification, container, false);
 		exitButton = (ImageButton) viewHierarchy.findViewById(R.id.imageExit);
 			
 		

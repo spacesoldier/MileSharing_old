@@ -1,7 +1,7 @@
 package com.soloway.city.milesharing.fragments;
 
 import com.soloway.city.milesharing.MainMapActivity;
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 
 import android.content.Intent;
 import android.os.Bundle;

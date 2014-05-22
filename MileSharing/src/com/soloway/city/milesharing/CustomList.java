@@ -1,5 +1,5 @@
 package com.soloway.city.milesharing;
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

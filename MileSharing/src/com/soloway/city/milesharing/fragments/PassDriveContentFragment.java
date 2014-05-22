@@ -1,6 +1,6 @@
 package com.soloway.city.milesharing.fragments;
 
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

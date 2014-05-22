@@ -1,7 +1,7 @@
 package com.soloway.city.milesharing.dialogs;
 
-import com.soloway.city.milesharing.R;
-import com.soloway.city.milesharing.R.layout;
+import com.soloway.transport.milesharing.R;
+import com.soloway.transport.milesharing.R.layout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
