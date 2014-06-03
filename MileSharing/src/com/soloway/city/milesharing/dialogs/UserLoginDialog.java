@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 
 public class UserLoginDialog extends DialogFragment {
 

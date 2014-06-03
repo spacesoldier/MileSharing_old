@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
-import com.soloway.city.milesharing.R;
+import com.soloway.transport.milesharing.R;
 import com.soloway.city.milesharing.dialogs.RegisterDialogFragment;
 import com.soloway.city.milesharing.routing.GMapV2GetRouteDirection;
 import com.google.android.gms.common.ConnectionResult;

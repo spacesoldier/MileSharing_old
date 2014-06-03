@@ -29,10 +29,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,12 +49,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -62,7 +71,11 @@ import com.google.gson.Gson;
 import com.soloway.city.milesharing.api.UserProfile;
 import com.soloway.city.milesharing.api.UserSession;
 import com.soloway.city.milesharing.api.UsersHelper;
+import com.soloway.city.milesharing.fragments.NotifyFragment;
+import com.soloway.city.milesharing.fragments.PassDriveContentFragment;
+import com.soloway.city.milesharing.fragments.PassDriveFragment;
 import com.soloway.city.milesharing.routing.GMapV2GetRouteDirection;
+import com.soloway.transport.milesharing.R;
 
 public class MainMapActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, LocationListener, 
@@ -94,24 +107,20 @@ public class MainMapActivity extends ActionBarActivity implements
     Integer[] imageId_p = {
   	      R.drawable.pass_icon,
   	     
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none,
-  	      R.drawable.none
+  	      R.drawable.history_icon,
+  	      R.drawable.route_icon,
+  	      R.drawable.people_icon,
+  	      R.drawable.preferences_icon
   	  
   	  };
-  
+    
     Integer[] imageId_d = {
     	      R.drawable.driver_icon,
     	     
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none,
-    	      R.drawable.none
+    	      R.drawable.history_icon,
+      	      R.drawable.route_icon,
+      	      R.drawable.people_icon,
+      	      R.drawable.preferences_icon
     	  
     	  };
     List<Overlay> mapOverlays;
@@ -137,6 +146,8 @@ public class MainMapActivity extends ActionBarActivity implements
     private Marker marker;
     private LinearLayout layout;
     private LinearLayout layout_top;
+    private TextView tvDis;
+    private TextView tvDur;
     
     private MainMapActivity mainMapActivity;
     int dur;
@@ -213,7 +224,7 @@ public class MainMapActivity extends ActionBarActivity implements
             drawerListViewItems = getResources().getStringArray(R.array.items_pass);
             
             // get ListView defined in activity_main.xml
-            drawerListView = (ListView) findViewById(R.id.menu_drawer);
+            drawerListView = (ListView) findViewById(R.id.navigation_drawer);
      
             adapter = new CustomList(MainMapActivity.this, drawerListViewItems, imageId_p);
             drawerListView.setAdapter(adapter);
@@ -227,8 +238,15 @@ public class MainMapActivity extends ActionBarActivity implements
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(ln));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
             
-            prefs = this.getSharedPreferences("com.soloway.city.milesharing", Context.MODE_PRIVATE);
+            
+            ///MY PART
+            
+            prefs = this.getSharedPreferences("com.soloway.transport.milesharing", Context.MODE_PRIVATE);
+            
+            
           
+          	        	  
+            
         }
 		
 	}
@@ -265,108 +283,52 @@ public class MainMapActivity extends ActionBarActivity implements
 	    
 	    private boolean noBtns = true;
 	    
+	    private void showNotifyDialog(){
+	    	FragmentManager fragMan = getSupportFragmentManager();
+            FragmentTransaction fragTransaction = fragMan.beginTransaction();
+            RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
+            Fragment myFrag = new NotifyFragment();
+            fragTransaction.add(rl.getId(), myFrag , "fragmentNotify");
+            fragTransaction.commit();
+	    }
+	    
+	    private void showRole(){
+	    	RelativeLayout rl = (RelativeLayout) findViewById(R.id.relative_layout);
+            Fragment fragPD = new PassDriveFragment();
+            getSupportFragmentManager().beginTransaction().add(rl.getId(),fragPD,"fragmentPassDriver").commit();
+	    }
+	    
 	    @Override
 		public void onMapLongClick(LatLng point) {
-//			googleMap.addMarker(new MarkerOptions().position(point).title("Go"));
+			//googleMap.addMarker(new MarkerOptions().position(point).title("Go"));
 			
+	    	
 			
-			if (marker != null) {
-				marker.remove();
-	        }
-	        marker = googleMap.addMarker(new MarkerOptions()
-	                .position(point).title("Go")
-	                .draggable(true).visible(true));
 	        
 	        toPosition = new LatLng(point.latitude, point.longitude);
-	        
+	        googleMap.clear();	
 	        GetRouteTask getRoute = new GetRouteTask();
 	        getRoute.execute();
 	        
+	        if (marker != null) {
+				marker.remove();
+	        }
+			
 	        
+	        
+	        marker = googleMap.addMarker(new MarkerOptions()
+	                .position(point).title("Go")
+	                .draggable(true).visible(true));
 	       
 	        layout = (LinearLayout) findViewById(R.id.bottom_box);
-	        layout_top = (LinearLayout) findViewById(R.id.top_box);
-
-	        if (noBtns)
-	        {
-	        	
-	        	Button btnOk = new Button(this);
-	        	btnOk.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-	        	btnOk.setText("GO");
-	        	btnOk.setId(R.id.btn_ok);
-	        	layout.addView(btnOk);
-
-	        	Button btnCancel = new Button(this);
-	            btnCancel.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-	            btnCancel.setText("Cancel");
-	            btnCancel.setId(R.id.btn_cancel);
-	            layout.addView(btnCancel);
-	        	
-	            btnOk.setOnClickListener(buttonClickListener);
-	            btnCancel.setOnClickListener(buttonClickListener);
-	            
-	            noBtns = false;
-	        }
 	        
-		}
+	        //showNotifyDialog();
+            //Фрагмент выбора роли
+	        //showRole();
+	        
+	        }
 	    
 	 
-	    private OnClickListener buttonClickListener = new OnClickListener() {
-
-	        @Override
-	        public void onClick(View v){
-	            switch (v.getId()) {
-	                case R.id.btn_ok:
-//	                	SharedPreferences  prefs = mainMapActivity.getSharedPreferences("com.soloway.city.milesharing", Context.MODE_PRIVATE);
-	                	if (prefs != null)
-	                	{
-	                		Gson gson = new Gson();
-	                	    String json = prefs.getString("UserSession", "");
-	                	    session = gson.fromJson(json, UserSession.class);
-	                	    
-	                	    if (session != null){
-	                	    	//attempt to login or register
-	                	    	boolean first_attempt = true;
-	                	    	showLoginDialog(first_attempt, false);
-	                	    	
-	                	    } else {
-	                	    	// nice. is it the first launch? Ok. let's create session!
-	                	    	session = new UserSession();
-	                	    	Editor prefsEditor = prefs.edit();
-	                	        Gson gsonBuffer = new Gson();
-	                	        String jsonBuffer = gsonBuffer.toJson(session);
-	                	        prefsEditor.putString("UserSession", jsonBuffer);
-	                	        prefsEditor.commit();
-	                	        
-	                	        // cool. so, it's time to login or register. isn't it?
-	                	        boolean first_attempt = true;
-	                	        showLoginDialog(first_attempt, false);
-	                	    }
-	                	    
-
-	                	}
-
-	                    break;
-	                case R.id.btn_cancel:
-	                    
-	                	if (marker != null) {
-	            			marker.remove();
-	            		}
-	            		
-	            		Button btn_ok = (Button) layout.findViewById(R.id.btn_ok);
-	            		if (btn_ok != null) layout.removeView(btn_ok);
-	            		Button button_cancel = (Button)layout.findViewById(R.id.btn_cancel);
-	            		if (button_cancel != null) layout.removeView(button_cancel);
-	            		noBtns = true;
-	                	
-	                    break;
-	                case View.NO_ID:
-	                default:
-	                    
-	                    break;
-	            }
-	        }
-	    };
 	    
 	    public void showLoginDialog(final boolean first_attempt, final boolean reg) {
 	        
@@ -432,10 +394,15 @@ public class MainMapActivity extends ActionBarActivity implements
 	                    	
 	                    	UserProfile authUser = new UserProfile();
 	                    	if (reg){
+	                    		//регистрация пользователя
 	                    		EditText firstNameEdit = (EditText) newUserData.findViewById(R.id.txt_first_name);
 	                    		authUser.setFirstName(firstNameEdit.getText().toString());
 	                    		EditText lastNameEdit = (EditText) newUserData.findViewById(R.id.txt_last_name);
 	                    		authUser.setSecondName(lastNameEdit.getText().toString());
+	                    		
+	                    		EditText emailEdit = (EditText) newUserData.findViewById(R.id.txt_email);
+	                    		authUser.setEmail(emailEdit.getText().toString());
+	                    		
 	                    	}
 	                    	authUser.setUserLogin(loginEdit.getText().toString());
 	                    	
@@ -452,11 +419,12 @@ public class MainMapActivity extends ActionBarActivity implements
 		                        }
 
 		                        hashPass =  sb.toString();
+		                        
 							} catch (NoSuchAlgorithmException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-	                        
+							
 	                    	
 	                    	authUser.setUserPassword(hashPass);
 	                    	
@@ -478,6 +446,9 @@ public class MainMapActivity extends ActionBarActivity implements
 	                    		}
 	                    		
 	                    		session.setSessionId(tmpSession.getSessionId());
+	                    		session.setTokenId(tmpSession.getTokenId());
+	                    		session.setUserId(tmpSession.getUserId());
+	                    		
 	                    		session.setOnline(tmpSession.isOnline());
 	                    		
 	                    		dialog.dismiss();
@@ -510,65 +481,47 @@ public class MainMapActivity extends ActionBarActivity implements
 	    
 	    private ProgressDialog dialog;
 	    
-	    class LoginRequestTask extends AsyncTask<UserProfile, String, String> {
-
-            @Override
-            protected String doInBackground(UserProfile... params) {
-
-                    try {
-                            //создаем запрос на сервер
-                            DefaultHttpClient hc = new DefaultHttpClient();
-                            ResponseHandler<String> res = new BasicResponseHandler();
-                            //он у нас будет посылать post запрос
-                            HttpPost postMethod = new HttpPost("http://78.47.251.3/users.php?push_user"+params[0].getRegData());
-                            //будем передавать два параметра
-                            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                            //передаем параметры из наших текстбоксов
-                            //логин
-//                            nameValuePairs.add(new BasicNameValuePair("login", login.getText().toString()));?
-                            //пароль
-//                            nameValuePairs.add(new BasicNameValuePair("pass", pass.getText().toString()));
-                            
-                            
-                            //собераем их вместе и посылаем на сервер
-//                            postMethod.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                            //получаем ответ от сервера
-                            String response = hc.execute(postMethod, res);
-                            
-                    } catch (Exception e) {
-                            System.out.println("Exp=" + e);
-                    }
-                    return null;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-
-                    dialog.dismiss();
-                    super.onPostExecute(result);
-            }
-
-            @Override
-            protected void onPreExecute() {
-
-                    dialog = new ProgressDialog(MainMapActivity.this);
-                    dialog.setMessage("Загружаюсь...");
-                    dialog.setIndeterminate(true);
-                    dialog.setCancelable(true);
-                    dialog.show();
-                    super.onPreExecute();
-            }
-	    }
+	    
 	    
 	// ROUTE LOAD SPLASH
 	    private class GetRouteTask extends AsyncTask<String, Void, String> {
 	        
+	    	private void showLogin(){
+	    		if (prefs != null)
+               	{
+               		Gson gson = new Gson();
+               	    String json = prefs.getString("UserSession", "");
+               	    session = gson.fromJson(json, UserSession.class);
+               	    
+               	    if (session != null){
+               	    	//attempt to login or register
+               	    	boolean first_attempt = true;
+               	    	showLoginDialog(first_attempt, false);
+               	    	
+               	    } else {
+               	    	// nice. is it the first launch? Ok. let's create session!
+               	    	session = new UserSession();
+               	    	Editor prefsEditor = prefs.edit();
+               	        Gson gsonBuffer = new Gson();
+               	        String jsonBuffer = gsonBuffer.toJson(session);
+               	        prefsEditor.putString("UserSession", jsonBuffer);
+               	        prefsEditor.commit();
+               	        
+               	        // cool. so, it's time to login or register. isn't it?
+               	        boolean first_attempt = true;
+               	        showLoginDialog(first_attempt, false);
+               	    }
+               	    
+
+               	}
+	    	}
+	    	
 	        private ProgressDialog Dialog;
 	        String response = "";
 	        @Override
 	        protected void onPreExecute() {
 	              Dialog = new ProgressDialog(MainMapActivity.this);
-	              Dialog.setMessage("Loading route...");
+	              Dialog.setMessage("Поиск маршрута...");
 	              Dialog.show();
 	        }
 
@@ -583,13 +536,64 @@ public class MainMapActivity extends ActionBarActivity implements
 
 	        @Override
 	        protected void onPostExecute(String result) {
-	              googleMap.clear();
+	              //googleMap.clear();
 	              if(response.equalsIgnoreCase("Success")){
 	            	  
 	             dur =  v2GetRouteDirection.getDurationValue(document);
 	             dis  =  v2GetRouteDirection.getDistanceValue(document);
 	              
-	              
+	             
+	             googleMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+
+	                 // Use default InfoWindow frame
+	                 @Override
+	                 public View getInfoWindow(Marker arg0) {
+	                     return null;
+	                 }
+
+	                 // Defines the contents of the InfoWindow
+	                 @Override
+	                 public View getInfoContents(Marker arg0) {
+
+	                     // Getting view from the layout file info_window_layout
+	                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
+
+	                     // Getting the position from the marker
+	                     LatLng latLng = arg0.getPosition();
+
+	                     //Finding buttons\
+	                     //Button bGo = ((Button) v.findViewById(R.id.btn_ok));
+	                     //Button bCancel = ((Button) v.findViewById(R.id.btn_cancel));
+	                      
+	                     
+	                     tvDis = (TextView) v.findViewById(R.id.textLength);
+	                     tvDur = (TextView) v.findViewById(R.id.textTime);
+	                    // tvDis.setText("Расстояние: "+String.valueOf(dis));
+	                    // tvDur.setText("Время: "+String.valueOf(dur));
+	                     tvDis.setText("Расстояние: "+String.valueOf((float) dis/1000)+ " км.");
+	                     tvDur.setText("Время: "+String.valueOf((int) dur/60)+" мин.");
+	                     
+	                     //bGo.setText("dgfd");
+	                   
+	    	            noBtns = false;
+	                     
+	                     return v;
+
+	                 }
+	             });
+	             
+	             marker.showInfoWindow();
+	             
+	             
+	             googleMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
+	   	        public void onInfoWindowClick(Marker marker){
+	   	        			showRole();
+	                     }
+	                   });
+	             
+	             
+	             
+                 
 	              ArrayList<LatLng> directionPoint = v2GetRouteDirection.getDirection(document);
 	              PolylineOptions rectLine = new PolylineOptions().width(10).color(
 	                          Color.BLUE);
@@ -602,13 +606,15 @@ public class MainMapActivity extends ActionBarActivity implements
 	              
 	              // Adding route on the map
 	              googleMap.addPolyline(rectLine);
-	              markerOptions.position(toPosition);
-	              markerOptions.draggable(true);
-	              googleMap.addMarker(markerOptions);
+	              //markerOptions.position(toPosition);
+	             // markerOptions.draggable(true);
+	              //googleMap.addMarker(markerOptions);
 
 	              }
 	             
 	              Dialog.dismiss();
+	              
+	              
 	        }
 	  }
 	    
